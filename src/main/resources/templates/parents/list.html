@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: nav}"></nav>
+<main class="container py-5">
+  <div th:replace="~{fragments/alerts :: alerts}"></div>
+  <header class="d-flex justify-content-between align-items-end mb-4">
+    <div><p class="eyebrow">Registry</p><h1 class="display-6 mb-0">Parents</h1></div>
+    <a class="btn btn-accent" th:href="@{/parents/new}">New parent</a>
+  </header>
+  <div th:if="${#lists.isEmpty(parents)}" class="empty-state">No parents yet. Create the first permanent record.</div>
+  <div th:unless="${#lists.isEmpty(parents)}" class="table-responsive surface">
+    <table class="table align-middle mb-0">
+      <thead><tr><th>Name</th><th>Identifier</th><th>Updated</th><th></th></tr></thead>
+      <tbody><tr th:each="parent : ${parents}">
+        <td class="fw-semibold" th:text="${parent.displayName}"></td>
+        <td><code th:text="${parent.id}"></code></td>
+        <td th:text="${parent.updatedAt}"></td>
+        <td class="text-end"><a class="btn btn-sm btn-outline-dark" th:href="@{/parents/{id}(id=${parent.id})}">Open</a></td>
+      </tr></tbody>
+    </table>
+  </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

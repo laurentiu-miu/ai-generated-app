@@ -1,0 +1,40 @@
+:root {
+  --bs-primary: #6f42c1;
+  --bs-primary-rgb: 111, 66, 193;
+  --ink: #241b35;
+  --paper: #f7f4fb;
+  --purple: #6f42c1;
+  --purple-dark: #4c2a85;
+  --purple-soft: #eee7f8;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.app-nav { background: linear-gradient(120deg, #35204f, var(--purple-dark)); }
+.eyebrow { color: var(--purple); font-family: system-ui, sans-serif; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .35rem; }
+.surface { background: #fff; border: 1px solid rgba(76, 42, 133, .16); border-radius: .55rem; box-shadow: 0 12px 32px rgba(76, 42, 133, .08); }
+.empty-state { border: 1px dashed rgba(111, 66, 193, .45); border-radius: .55rem; padding: 3rem; text-align: center; color: #675b76; background: rgba(255, 255, 255, .45); }
+.btn-accent { background: var(--purple); border-color: var(--purple); color: #fff; }
+.btn-accent:hover, .btn-accent:focus-visible { background: var(--purple-dark); border-color: var(--purple-dark); color: #fff; }
+.btn-outline-dark { --bs-btn-color: var(--purple-dark); --bs-btn-border-color: var(--purple-dark); --bs-btn-hover-bg: var(--purple-dark); --bs-btn-hover-border-color: var(--purple-dark); }
+.btn-link { --bs-btn-color: var(--purple-dark); --bs-btn-hover-color: var(--purple); }
+.form-control:focus { border-color: #9b7bd1; box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .18); }
+.narrow { max-width: 760px; }
+.json-view, .json-inline { margin: 0; white-space: pre-wrap; color: var(--purple-dark); }
+.json-inline { max-height: 8rem; overflow: auto; font-size: .8rem; }
+.metadata div { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0; border-bottom: 1px solid #e4ddec; }
+.metadata span, table, .form-label, .form-text, .btn, .status-pill, small { font-family: system-ui, sans-serif; }
+.app-progress { height: 1.4rem; background: #e5dff0; }
+.app-progress .progress-bar { background: linear-gradient(90deg, var(--purple), #9b6dd6); }
+.status-pill { display: inline-block; padding: .25rem .55rem; border-radius: 2rem; background: var(--purple-soft); color: var(--purple-dark); font-size: .75rem; font-weight: 700; }
+code { color: var(--purple-dark); }
+
+@media (max-width: 576px) {
+  .display-6 { font-size: 2rem; }
+  .surface.p-4 { padding: 1.25rem !important; }
+  .row.text-center .col { min-width: 33%; }
+}

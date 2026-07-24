@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: file-importer
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:15432/file_importer}
+    username: ${DB_USERNAME:file_importer}
+    password: ${DB_PASSWORD:file_importer}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: never
+  servlet:
+    multipart:
+      max-file-size: ${APP_UPLOAD_MAX_SIZE:20MB}
+      max-request-size: ${APP_UPLOAD_MAX_SIZE:20MB}
+  thymeleaf:
+    cache: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+app:
+  upload:
+    directory: ${APP_UPLOAD_DIRECTORY:./uploads}
+    max-size: ${APP_UPLOAD_MAX_SIZE:20MB}
+  batch:
+    chunk-size: ${APP_BATCH_CHUNK_SIZE:100}
+    core-pool-size: ${APP_BATCH_CORE_POOL_SIZE:2}
+    max-pool-size: ${APP_BATCH_MAX_POOL_SIZE:4}
+    queue-capacity: ${APP_BATCH_QUEUE_CAPACITY:20}

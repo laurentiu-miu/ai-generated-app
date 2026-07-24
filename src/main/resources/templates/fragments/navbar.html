@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="nav" class="navbar navbar-expand-md navbar-dark app-nav">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" th:href="@{/parents}">File Importer</a>
+    <div class="navbar-nav flex-row gap-3">
+      <a class="nav-link" th:href="@{/parents}">Registry</a>
+      <a class="nav-link" th:href="@{/imports}">Imports</a>
+    </div>
+  </div>
+</nav>
+</body>
+</html>

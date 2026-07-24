@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+<nav th:replace="~{fragments/navbar :: nav}"></nav>
+<main class="container py-5 narrow">
+  <p class="eyebrow" th:text="${editing ? 'Update record' : 'Create record'}"></p>
+  <h1 th:text="${editing ? 'Edit parent' : 'New parent'}"></h1>
+  <form class="surface p-4 mt-4" th:object="${form}" method="post"
+        th:action="${editing} ? @{/parents/{id}(id=${parentId})} : @{/parents}">
+    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">Review the highlighted fields.</div>
+    <div class="mb-4">
+      <label class="form-label" for="displayName">Display name</label>
+      <input id="displayName" class="form-control" th:errorclass="is-invalid" th:field="*{displayName}" maxlength="255">
+      <div class="invalid-feedback" th:errors="*{displayName}"></div>
+    </div>
+    <div class="mb-4">
+      <label class="form-label" for="dynamicProperties">Dynamic properties</label>
+      <textarea id="dynamicProperties" class="form-control font-monospace" th:errorclass="is-invalid"
+                th:field="*{dynamicProperties}" rows="12" spellcheck="false"></textarea>
+      <div class="form-text">Enter a JSON object. Blank input is stored as <code>{}</code>.</div>
+      <div class="invalid-feedback" th:errors="*{dynamicProperties}"></div>
+    </div>
+    <input th:if="${editing}" type="hidden" th:field="*{version}">
+    <button class="btn btn-accent" type="submit">Save parent</button>
+    <a class="btn btn-link text-dark" th:href="${editing} ? @{/parents/{id}(id=${parentId})} : @{/parents}">Cancel</a>
+  </form>
+</main>
+</body>
+</html>

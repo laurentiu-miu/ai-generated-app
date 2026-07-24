@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="progress" class="progress app-progress" role="progressbar"
+     th:attr="aria-valuenow=${progress.percentage}" aria-valuemin="0" aria-valuemax="100">
+  <div id="progress-bar" class="progress-bar" th:style="|width: ${progress.percentage}%|"
+       th:text="|${progress.percentage}%|"></div>
+</div>
+</body>
+</html>

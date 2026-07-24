@@ -1,0 +1,4 @@
+recordType,parentExternalKey,parentDisplayName,childExternalKey,childDisplayName,properties
+P,PARENT-001,First parent,,,"{""country"":""RO"",""active"":true}"
+C,PARENT-001,,CHILD-001,First child,"{""score"":10}"
+C,PARENT-001,,CHILD-002,Second child,"{""score"":20}"
