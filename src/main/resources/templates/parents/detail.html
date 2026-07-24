@@ -1,27 +1,27 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: head}"></head>
 <body>
 <nav th:replace="~{fragments/navbar :: nav}"></nav>
 <main class="container py-5">
   <div th:replace="~{fragments/alerts :: alerts}"></div>
   <header class="d-lg-flex justify-content-between align-items-start mb-4">
-    <div><p class="eyebrow">Parent</p><h1 th:text="${parent.displayName}"></h1><code th:text="${parent.id}"></code></div>
+    <div><p class="eyebrow" th:text="#{parent.eyebrow}">Parent</p><h1 th:text="${parent.displayName}"></h1><code th:text="${parent.id}"></code></div>
     <div class="d-flex gap-2 mt-3 mt-lg-0">
-      <a class="btn btn-outline-dark" th:href="@{/parents/{id}/edit(id=${parent.id})}">Edit</a>
+      <a class="btn btn-outline-dark" th:href="@{/parents/{id}/edit(id=${parent.id})}" th:text="#{action.edit}">Edit</a>
       <form method="post" th:action="@{/parents/{id}/delete(id=${parent.id})}">
         <input type="hidden" name="version" th:value="${parent.version}">
-        <button class="btn btn-outline-danger" type="submit">Delete</button>
+        <button class="btn btn-outline-danger" type="submit" th:text="#{action.delete}">Delete</button>
       </form>
     </div>
   </header>
   <div class="row g-4 mb-5">
-    <section class="col-lg-8"><div class="surface p-4 h-100"><h2 class="h6">Dynamic properties</h2><pre class="json-view" th:text="${parentProperties}"></pre></div></section>
-    <aside class="col-lg-4"><div class="surface p-4 h-100 metadata"><div><span>Created</span><strong th:text="${parent.createdAt}"></strong></div><div><span>Updated</span><strong th:text="${parent.updatedAt}"></strong></div><div><span>Version</span><strong th:text="${parent.version}"></strong></div></div></aside>
+    <section class="col-lg-8"><div class="surface p-4 h-100"><h2 class="h6" th:text="#{label.dynamicProperties}">Dynamic properties</h2><pre class="json-view" th:text="${parentProperties}"></pre></div></section>
+    <aside class="col-lg-4"><div class="surface p-4 h-100 metadata"><div><span th:text="#{label.created}">Created</span><strong th:text="${parent.createdAt}"></strong></div><div><span th:text="#{label.updated}">Updated</span><strong th:text="${parent.updatedAt}"></strong></div><div><span th:text="#{label.version}">Version</span><strong th:text="${parent.version}"></strong></div></div></aside>
   </div>
-  <header class="d-flex justify-content-between align-items-center mb-3"><h2 class="h3 mb-0">Children <span class="text-secondary" th:text="|(${#lists.size(children)})|"></span></h2><a class="btn btn-accent" th:href="@{/parents/{id}/children/new(id=${parent.id})}">New child</a></header>
-  <div th:if="${#lists.isEmpty(children)}" class="empty-state">This parent has no children.</div>
-  <div th:unless="${#lists.isEmpty(children)}" class="surface table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Name</th><th>Properties</th><th></th></tr></thead><tbody><tr th:each="child : ${children}"><td><strong th:text="${child.displayName}"></strong><br><code th:text="${child.id}"></code></td><td><pre class="json-inline" th:text="${child.properties}"></pre></td><td class="text-end"><a class="btn btn-sm btn-outline-dark" th:href="@{/parents/{pid}/children/{cid}/edit(pid=${parent.id},cid=${child.id})}">Edit</a><form class="d-inline" method="post" th:action="@{/parents/{pid}/children/{cid}/delete(pid=${parent.id},cid=${child.id})}"><input type="hidden" name="version" th:value="${child.version}"><button class="btn btn-sm btn-outline-danger" type="submit">Delete</button></form></td></tr></tbody></table></div>
+  <header class="d-flex justify-content-between align-items-center mb-3"><h2 class="h3 mb-0"><span th:text="#{child.list.title}">Children</span> <span class="text-secondary" th:text="|(${#lists.size(children)})|"></span></h2><a class="btn btn-accent" th:href="@{/parents/{id}/children/new(id=${parent.id})}" th:text="#{parent.detail.newChild}">New child</a></header>
+  <div th:if="${#lists.isEmpty(children)}" class="empty-state" th:text="#{parent.detail.noChildren}">This parent has no children.</div>
+  <div th:unless="${#lists.isEmpty(children)}" class="surface table-responsive"><table class="table align-middle mb-0"><thead><tr><th th:text="#{label.name}">Name</th><th th:text="#{label.properties}">Properties</th><th></th></tr></thead><tbody><tr th:each="child : ${children}"><td><strong th:text="${child.displayName}"></strong><br><code th:text="${child.id}"></code></td><td><pre class="json-inline" th:text="${child.properties}"></pre></td><td class="text-end"><a class="btn btn-sm btn-outline-dark" th:href="@{/parents/{pid}/children/{cid}/edit(pid=${parent.id},cid=${child.id})}" th:text="#{action.edit}">Edit</a><form class="d-inline" method="post" th:action="@{/parents/{pid}/children/{cid}/delete(pid=${parent.id},cid=${child.id})}"><input type="hidden" name="version" th:value="${child.version}"><button class="btn btn-sm btn-outline-danger" type="submit" th:text="#{action.delete}">Delete</button></form></td></tr></tbody></table></div>
 </main>
 </body>
 </html>

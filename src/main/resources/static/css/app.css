@@ -15,6 +15,7 @@ body {
 }
 
 .app-nav { background: linear-gradient(120deg, #35204f, var(--purple-dark)); }
+.language-select { min-width: 7.5rem; border-color: rgba(255, 255, 255, .4); background-color: rgba(255, 255, 255, .94); color: var(--purple-dark); }
 .eyebrow { color: var(--purple); font-family: system-ui, sans-serif; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: .35rem; }
 .surface { background: #fff; border: 1px solid rgba(76, 42, 133, .16); border-radius: .55rem; box-shadow: 0 12px 32px rgba(76, 42, 133, .08); }
 .empty-state { border: 1px dashed rgba(111, 66, 193, .45); border-radius: .55rem; padding: 3rem; text-align: center; color: #675b76; background: rgba(255, 255, 255, .45); }

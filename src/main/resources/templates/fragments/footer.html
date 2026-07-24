@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <body>
-<footer th:fragment="footer" class="container py-5 text-secondary small">File Importer administration console</footer>
+<footer th:fragment="footer" class="container py-5 text-secondary small" th:text="#{app.footer}">File Importer administration console</footer>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: head}"></head>
-<body><nav th:replace="~{fragments/navbar :: nav}"></nav><main class="container py-5 narrow"><div class="surface p-5"><p class="eyebrow" th:text="|HTTP ${status}|"></p><h1 th:text="${title}"></h1><p class="lead text-secondary" th:text="${message}"></p><a class="btn btn-accent" th:href="@{/parents}">Return to registry</a></div></main></body>
+<body><nav th:replace="~{fragments/navbar :: nav}"></nav><main class="container py-5 narrow"><div class="surface p-5"><p class="eyebrow" th:text="#{error.http(${status})}">HTTP</p><h1 th:text="${title}"></h1><p class="lead text-secondary" th:text="${message}"></p><a class="btn btn-accent" th:href="@{/parents}" th:text="#{action.returnToRegistry}">Return to registry</a></div></main></body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="alerts">
   <div th:if="${success}" class="alert alert-success" role="status" th:text="${success}"></div>

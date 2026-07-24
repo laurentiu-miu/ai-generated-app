@@ -4,6 +4,8 @@ import com.example.fileimporter.dto.ImportProgress;
 import com.example.fileimporter.model.FileImport;
 import com.example.fileimporter.service.ImportService;
 import org.springframework.stereotype.Controller;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +20,12 @@ import java.util.UUID;
 @RequestMapping("/imports")
 public class ImportController {
     private final ImportService importService;
+    private final MessageSource messageSource;
 
-    public ImportController(ImportService importService) { this.importService = importService; }
+    public ImportController(ImportService importService, MessageSource messageSource) {
+        this.importService = importService;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping
     public String list(Model model) {
@@ -44,7 +50,7 @@ public class ImportController {
         FileImport fileImport = importService.require(importId);
         model.addAttribute("fileImport", fileImport);
         model.addAttribute("errors", importService.errors(importId));
-        model.addAttribute("progress", ImportProgress.from(fileImport));
+        model.addAttribute("progress", ImportProgress.from(fileImport, messageSource, LocaleContextHolder.getLocale()));
         return "imports/detail";
     }
 }

@@ -9,7 +9,8 @@
       const response = await fetch(`/api/imports/${id}/progress`, {headers:{Accept:"application/json"}});
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json(); failures = 0;
-      ["status","message","totalRows","processedRows","successfulRows","failedRows","skippedRows"].forEach(key => {
+      setText("status", data.statusLabel);
+      ["message","totalRows","processedRows","successfulRows","failedRows","skippedRows"].forEach(key => {
         const elementId = key.replace("Rows", "").replace(/^./, c => c.toLowerCase());
         setText(elementId, data[key]);
       });

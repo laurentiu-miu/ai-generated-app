@@ -7,6 +7,8 @@ import com.example.fileimporter.service.ParentService;
 import com.example.fileimporter.util.JsonObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +27,14 @@ public class ChildController {
     private final ChildService childService;
     private final ParentService parentService;
     private final JsonObjectMapper jsonObjectMapper;
+    private final MessageSource messageSource;
 
-    public ChildController(ChildService childService, ParentService parentService, JsonObjectMapper jsonObjectMapper) {
+    public ChildController(ChildService childService, ParentService parentService, JsonObjectMapper jsonObjectMapper,
+                           MessageSource messageSource) {
         this.childService = childService;
         this.parentService = parentService;
         this.jsonObjectMapper = jsonObjectMapper;
+        this.messageSource = messageSource;
     }
 
     @GetMapping("/new")
@@ -47,7 +52,7 @@ public class ChildController {
             return "children/form";
         }
         childService.create(parentId, form.getDisplayName(), properties);
-        redirectAttributes.addFlashAttribute("success", "Child created");
+        redirectAttributes.addFlashAttribute("success", message("flash.child.created"));
         return "redirect:/parents/" + parentId;
     }
 
@@ -67,7 +72,7 @@ public class ChildController {
                          @Valid @ModelAttribute("form") ChildForm form, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes) {
         if (form.getVersion() == null) {
-            bindingResult.reject("version.required", "Version is required");
+            bindingResult.reject("version.required");
         }
         Map<String, Object> properties = parseProperties(form.getDynamicProperties(), bindingResult);
         if (bindingResult.hasErrors()) {
@@ -75,7 +80,7 @@ public class ChildController {
             return "children/form";
         }
         childService.update(parentId, childId, form.getVersion(), form.getDisplayName(), properties);
-        redirectAttributes.addFlashAttribute("success", "Child updated");
+        redirectAttributes.addFlashAttribute("success", message("flash.child.updated"));
         return "redirect:/parents/" + parentId;
     }
 
@@ -83,7 +88,7 @@ public class ChildController {
     public String delete(@PathVariable UUID parentId, @PathVariable UUID childId, long version,
                          RedirectAttributes redirectAttributes) {
         childService.delete(parentId, childId, version);
-        redirectAttributes.addFlashAttribute("success", "Child deleted");
+        redirectAttributes.addFlashAttribute("success", message("flash.child.deleted"));
         return "redirect:/parents/" + parentId;
     }
 
@@ -91,7 +96,7 @@ public class ChildController {
         try {
             return jsonObjectMapper.parse(value);
         } catch (IllegalArgumentException exception) {
-            bindingResult.rejectValue("dynamicProperties", "properties.invalid", exception.getMessage());
+            bindingResult.rejectValue("dynamicProperties", "properties.invalid");
             return Map.of();
         }
     }
@@ -102,5 +107,9 @@ public class ChildController {
         model.addAttribute("parentId", parentId);
         model.addAttribute("childId", childId);
         model.addAttribute("editing", editing);
+    }
+
+    private String message(String key) {
+        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
     }
 }

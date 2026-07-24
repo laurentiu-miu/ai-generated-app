@@ -1,12 +1,21 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <body>
 <nav th:fragment="nav" class="navbar navbar-expand-md navbar-dark app-nav">
   <div class="container">
-    <a class="navbar-brand fw-semibold" th:href="@{/parents}">File Importer</a>
-    <div class="navbar-nav flex-row gap-3">
-      <a class="nav-link" th:href="@{/parents}">Registry</a>
-      <a class="nav-link" th:href="@{/imports}">Imports</a>
+    <a class="navbar-brand fw-semibold" th:href="@{/parents}" th:text="#{app.title}">File Importer</a>
+    <div class="navbar-nav flex-row gap-3 align-items-center">
+      <a class="nav-link" th:href="@{/parents}" th:text="#{nav.registry}">Registry</a>
+      <a class="nav-link" th:href="@{/imports}" th:text="#{nav.imports}">Imports</a>
+      <form class="d-flex align-items-center ms-md-3" method="post" th:action="@{/language}">
+        <label class="visually-hidden" for="language" th:text="#{language.label}">Language</label>
+        <input type="hidden" name="redirect" th:value="${currentPath}">
+        <select id="language" name="language" class="form-select form-select-sm language-select"
+                th:attr="aria-label=#{language.label}" onchange="this.form.submit()">
+          <option value="en" th:selected="${#locale.language == 'en'}" th:text="#{language.english}">English</option>
+          <option value="ro" th:selected="${#locale.language == 'ro'}" th:text="#{language.romanian}">Romanian</option>
+        </select>
+      </form>
     </div>
   </div>
 </nav>

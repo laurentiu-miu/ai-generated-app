@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: head}"></head>
 <body>
 <nav th:replace="~{fragments/navbar :: nav}"></nav>
 <main class="container py-5 narrow">
-  <p class="eyebrow" th:text="|Child of ${parent.displayName}|"></p>
-  <h1 th:text="${editing ? 'Edit child' : 'New child'}"></h1>
+  <p class="eyebrow" th:text="#{child.form.context(${parent.displayName})}"></p>
+  <h1 th:text="${editing} ? #{child.form.edit.title} : #{child.form.create.title}"></h1>
   <form class="surface p-4 mt-4" th:object="${form}" method="post"
         th:action="${editing} ? @{/parents/{pid}/children/{cid}(pid=${parentId},cid=${childId})} : @{/parents/{pid}/children(pid=${parentId})}">
-    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">Review the highlighted fields.</div>
-    <div class="mb-4"><label class="form-label" for="displayName">Display name</label><input id="displayName" class="form-control" th:errorclass="is-invalid" th:field="*{displayName}" maxlength="255"><div class="invalid-feedback" th:errors="*{displayName}"></div></div>
-    <div class="mb-4"><label class="form-label" for="dynamicProperties">Dynamic properties</label><textarea id="dynamicProperties" class="form-control font-monospace" th:errorclass="is-invalid" th:field="*{dynamicProperties}" rows="12" spellcheck="false"></textarea><div class="form-text">A JSON object; blank becomes <code>{}</code>.</div><div class="invalid-feedback" th:errors="*{dynamicProperties}"></div></div>
+    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger" th:text="#{form.reviewErrors}">Review the highlighted fields.</div>
+    <div class="mb-4"><label class="form-label" for="displayName" th:text="#{label.displayName}">Display name</label><input id="displayName" class="form-control" th:errorclass="is-invalid" th:field="*{displayName}" maxlength="255"><div class="invalid-feedback" th:errors="*{displayName}"></div></div>
+    <div class="mb-4"><label class="form-label" for="dynamicProperties" th:text="#{label.dynamicProperties}">Dynamic properties</label><textarea id="dynamicProperties" class="form-control font-monospace" th:errorclass="is-invalid" th:field="*{dynamicProperties}" rows="12" spellcheck="false"></textarea><div class="form-text" th:text="#{form.properties.help}">Enter a JSON object.</div><div class="invalid-feedback" th:errors="*{dynamicProperties}"></div></div>
     <input th:if="${editing}" type="hidden" th:field="*{version}">
-    <button class="btn btn-accent" type="submit">Save child</button><a class="btn btn-link text-dark" th:href="@{/parents/{id}(id=${parentId})}">Cancel</a>
+    <button class="btn btn-accent" type="submit" th:text="#{child.form.save}">Save child</button><a class="btn btn-link text-dark" th:href="@{/parents/{id}(id=${parentId})}" th:text="#{action.cancel}">Cancel</a>
   </form>
 </main>
 </body>

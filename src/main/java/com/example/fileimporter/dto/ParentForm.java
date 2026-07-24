@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class ParentForm {
-    @NotBlank(message = "Display name is required")
-    @Size(max = 255, message = "Display name must contain at most 255 characters")
+    @NotBlank(message = "{validation.displayName.required}")
+    @Size(max = 255, message = "{validation.displayName.size}")
     private String displayName = "";
     private String dynamicProperties = "{}";
     private Long version;
