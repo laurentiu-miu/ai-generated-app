@@ -7,3 +7,6 @@ uploads/
 *.log
 hs_err_pid*
 replay_pid*
+.opencode/node_modules/
+.opencode/package-lock.json
+.opencode/bun.lock
